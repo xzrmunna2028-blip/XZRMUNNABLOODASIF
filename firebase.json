@@ -1,0 +1,54 @@
+{
+  "database": {
+    "rules": "_setup/firebase/database.rules.json"
+  },
+  "firestore": {
+    "rules": "_setup/firebase/firestore.rules"
+  },
+  "functions": [
+    {
+      "source": "_setup/functions",
+      "codebase": "default"
+    }
+  ],
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "_setup/**",
+      "README.md",
+      "CLIENT-GUIDE.md",
+      "*.kt",
+      "package.json",
+      "vercel.json",
+      "_headers",
+      "_redirects",
+      "HANDOVER.md",
+      "api/**"
+    ],
+    "cleanUrls": true,
+    "rewrites": [
+      {
+        "source": "/admin",
+        "destination": "/admin.html"
+      },
+      {
+        "source": "/admin/**",
+        "destination": "/admin.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
+    ]
+  }
+}

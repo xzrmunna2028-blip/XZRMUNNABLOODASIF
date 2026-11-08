@@ -1,0 +1,216 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "admins": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid"
+      }
+    },
+    "admin_kv": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "services": {
+        ".read": true
+      },
+      "site": {
+        ".read": true
+      },
+      "slider": {
+        ".read": true
+      },
+      "notify": {
+        ".read": true
+      },
+      "donations": {
+        ".read": true
+      },
+      "collected": {
+        ".read": true
+      },
+      "avdonors": {
+        ".read": true
+      },
+      "police": {
+        ".read": true
+      },
+      "ambulance": {
+        ".read": true
+      },
+      "hospitals": {
+        ".read": true
+      },
+      "doctors": {
+        ".read": true
+      },
+      "nasheed": {
+        ".read": true
+      },
+      "dua": {
+        ".read": true
+      },
+      "library": {
+        ".read": true
+      },
+      "prayer": {
+        ".read": true
+      },
+      "azan": {
+        ".read": true
+      },
+      "shop": {
+        ".read": true
+      },
+      "couriers": {
+        ".read": true
+      },
+      "team": {
+        ".read": true
+      },
+      "acctmsg": {
+        ".read": true
+      },
+      "notice": {
+        ".read": true
+      },
+      "maint": {
+        ".read": true
+      },
+      "shopP": {
+        ".read": true
+      }
+    },
+    "users": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid",
+        ".validate": "newData.child('verified').val() === data.child('verified').val() || root.child('admins').child(auth.uid).val() === true"
+      }
+    },
+    "push_subs": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$uid": {
+        ".write": "auth != null && auth.uid === $uid",
+        ".validate": "newData.hasChildren(['uid','perm','ts']) && newData.child('uid').val() === $uid",
+        "uid": {
+          ".validate": "newData.isString()"
+        },
+        "oid": {
+          ".validate": "newData.isString() && newData.val().length < 100"
+        },
+        "optedIn": {
+          ".validate": "newData.isBoolean()"
+        },
+        "perm": {
+          ".validate": "newData.isString() && newData.val().length < 20"
+        },
+        "ua": {
+          ".validate": "newData.isString() && newData.val().length < 200"
+        },
+        "email": {
+          ".validate": "newData.isString() && newData.val().length < 200"
+        },
+        "name": {
+          ".validate": "newData.isString() && newData.val().length < 200"
+        },
+        "ts": {
+          ".validate": "newData.isNumber()"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    },
+    "push_log": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+    },
+    "donors": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$k": {
+        ".write": "(auth != null && ((!data.exists() && newData.child('uid').val() === auth.uid) || (data.exists() && data.child('uid').val() === auth.uid && newData.child('uid').val() === auth.uid))) && (!root.child('account_status').child(auth.uid).exists() || root.child('account_status').child(auth.uid).child('until').val() < now)",
+        ".validate": "auth != null && root.child('admins').child(auth.uid).val() === true || (((newData.hasChildren(['name','phone','uid'])) && (newData.child('verified').val() === data.child('verified').val() || root.child('admins').child(auth.uid).val() === true)))"
+      }
+    },
+    "requests": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$id": {
+        ".write": "(auth != null && !data.exists() && newData.child('uid').val() === auth.uid && newData.child('status').val() === 'pending' && !newData.child('adminPhone').exists()) && (!root.child('account_status').child(auth.uid).exists() || root.child('account_status').child(auth.uid).child('until').val() < now)",
+        ".validate": "auth != null && root.child('admins').child(auth.uid).val() === true || (newData.hasChildren(['name','phone','uid']))"
+      }
+    },
+    "push_targeted": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+    },
+    "push_queue": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+    },
+    "backup_queue": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+    },
+    "geo_villages": {
+      ".read": "auth != null",
+      "$key": {
+        "$v": {
+          ".write": "auth != null && !data.exists()",
+          ".validate": "newData.isString() && newData.val().length <= 60"
+        }
+      }
+    },
+    "orders": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        "$oid": {
+          ".write": "(auth != null && auth.uid === $uid && (!data.exists() || ((data.child('status').val() === 'pending' || data.child('status').val() === 'confirmed' || data.child('status').val() === 'processing') && newData.child('status').val() === 'cancelled' && newData.child('total').val() === data.child('total').val() && newData.child('trx').val() === data.child('trx').val() && newData.child('uid').val() === data.child('uid').val()))) && (!root.child('account_status').child(auth.uid).exists() || root.child('account_status').child(auth.uid).child('until').val() < now)",
+          ".validate": "newData.hasChildren(['name','phone','total','uid']) && newData.child('uid').val() === $uid && newData.child('name').isString() && newData.child('name').val().length <= 80 && newData.child('phone').isString() && newData.child('phone').val().length <= 20 && newData.child('total').isNumber() && newData.child('total').val() >= 0 && (!newData.child('addr').exists() || (newData.child('addr').isString() && newData.child('addr').val().length <= 400)) && (!newData.child('courier').exists() || (newData.child('courier').isString() && newData.child('courier').val().length <= 160))"
+        }
+      }
+    },
+    "fund": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+    },
+    "khata": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+    },
+    "member_forms": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$id": {
+        ".write": "(auth != null && !data.exists() && newData.child('uid').val() === auth.uid) && (!root.child('account_status').child(auth.uid).exists() || root.child('account_status').child(auth.uid).child('until').val() < now)",
+        ".validate": "newData.hasChildren(['name','father','phone','sign','uid','ts']) && newData.child('name').isString() && newData.child('name').val().length <= 100 && newData.child('phone').isString() && newData.child('phone').val().length <= 20 && newData.child('sign').isString() && newData.child('sign').val().length <= 250000 && (!newData.child('serial').exists() || newData.child('serial').isNumber())"
+      }
+    },
+    "support_chats": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid",
+        "msgs": {
+          "$mid": {
+            ".validate": "newData.hasChildren(['r','t','ts']) && newData.child('t').isString() && newData.child('t').val().length <= 500 && (newData.child('r').val() === 'u' || newData.child('r').val() === 'b' || root.child('admins').child(auth.uid).val() === true)"
+          }
+        }
+      }
+    },
+    "account_status": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid"
+      }
+    }
+  }
+}

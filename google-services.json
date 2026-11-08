@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "566602962813",
+    "project_id": "blood-society-3727a",
+    "storage_bucket": "blood-society-3727a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:566602962813:android:afd1edcbfa75cf4c6d5e14",
+        "android_client_info": {
+          "package_name": "com.blooddonatesociety.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0u78YgXThFufn9iwybAxy4ZOpavQ_BOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
